@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "elytra_mace",
+  "version": "${version}",
+  "name": "Elytra Mace",
+  "description": "A client-side Fabric mod for configurable elytra and mace practice routines.",
+  "authors": [
+    "s4fire"
+  ],
+  "contact": {
+    "sources": "https://github.com/s4fire/elytra-mace"
+  },
+  "license": "CC0-1.0",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "dev.s4fire.elytramace.ElytraMaceClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "~26.3",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}

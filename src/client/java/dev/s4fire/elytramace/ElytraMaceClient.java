@@ -3,30 +3,30 @@ package dev.s4fire.elytramace;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Client entry point for Elytra Mace.
  *
- * The first implementation step establishes a normal Minecraft keybind that
- * users can reassign in Options -> Controls -> Key Binds. This toggle is only
- * a foundation for later non-combat client features.
+ * The configurable toggle is the foundation for the mod's client-side
+ * features. The key can be reassigned in Options -> Controls -> Key Binds.
  */
 public final class ElytraMaceClient implements ClientModInitializer {
     public static final String MOD_ID = "elytra_mace";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     private static final KeyMapping.Category CATEGORY =
-            KeyMapping.Category.register(MOD_ID + ":controls");
+            KeyMapping.Category.register(Identifier.fromNamespaceAndPath(MOD_ID, "controls"));
 
-    private static final KeyMapping TOGGLE_KEY = KeyBindingHelper.registerKeyBinding(
+    private static final KeyMapping TOGGLE_KEY = KeyMappingHelper.registerKeyMapping(
             new KeyMapping(
                     "key.elytra_mace.toggle",
-                    InputConstants.Type.KEYSYM,
+                    InputConstants.Type.KEYBOARD,
                     InputConstants.KEY_X,
                     CATEGORY
             )
@@ -43,9 +43,8 @@ public final class ElytraMaceClient implements ClientModInitializer {
                 }
 
                 enabled = !enabled;
-                client.player.displayClientMessage(
-                        Component.literal("Elytra Mace: " + (enabled ? "Enabled" : "Disabled")),
-                        true
+                client.player.sendSystemMessage(
+                        Component.literal("Elytra Mace: " + (enabled ? "Enabled" : "Disabled"))
                 );
                 LOGGER.info("Elytra Mace toggled {}", enabled ? "on" : "off");
             }
